@@ -11,6 +11,7 @@ var PreloadState = {
 		this.load.spritesheet("walking", "assets/walking.png", 80, 128);
 		this.load.spritesheet("blinking", "assets/blinking.png", 80, 128);
 		this.load.spritesheet("running", "assets/running.png", 80, 128);
+		this.load.spritesheet("kongVault", "assets/vault.png", 200, 128);
 	},
 
 	create: function(){

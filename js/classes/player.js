@@ -1,5 +1,6 @@
 var awayFormWallFPS = 20;
 var runningFPS = 25;
+var vaultFPS = 30;
 
 var walkingSpeed = 100;
 
@@ -36,6 +37,7 @@ Player.prototype.walkingAwayFromWallAnimation = function() {
 		this.playerAwayFromWallAnimation.body.velocity.x = 0;
 		this.playerAwayFromWallAnimation.destroy();
 		this.runningAnimation();
+		this.kongVault();
 		playerRunning = true;
 		//Background.moveBackground();
 	}, this);
@@ -70,14 +72,22 @@ Player.prototype.runningAnimation = function() {
 	allowJump = true;
 }
 
-Player.prototype.jump = function() {
-	if (game.input.activePointer.isDown && this.playerRunning.body.touching.down){
-		this.playerRunning.body.velocity.y = -jumpForce;
-		playerJumping = true;
-	}
-	else playerJumping = false;
+Player.prototype.kongVault = function() {
+	this.kongVault = game.add.sprite(this.playerRunning.x - 60, this.playerRunning.y, "kongVault");
+	this.kongVault.animations.add("kongVault", [7, 8, 9, 10, 11, 12, 13, 13, 13, 14, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], vaultFPS, false);
+	this.kongVault.events.onAnimationComplete.add(function() {
+			this.playerJumping = false;
+			this.kongVault.alpha = 0;
+			this.playerRunning.alpha = 1;
+		}, this);
+	game.physics.arcade.enable(this.kongVault);
+	this.kongVault.alpha = 0;
+}
 
-	if (!this.playerRunning.body.touching.down) {
-		this.playerRunning.frame = 12;
-	};
+Player.prototype.jump = function() {
+	if (game.input.activePointer.isDown){
+		this.kongVault.alpha = 1;
+		this.playerRunning.alpha = 0;
+		this.kongVault.animations.play("kongVault");
+	}
 }
