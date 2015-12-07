@@ -1,6 +1,6 @@
 var awayFormWallFPS = 20;
 var runningFPS = 25;
-var vaultFPS = 30;
+var vaultFPS = 20;
 
 var walkingSpeed = 100;
 
@@ -74,7 +74,7 @@ Player.prototype.runningAnimation = function() {
 
 Player.prototype.kongVault = function() {
 	this.kongVault = game.add.sprite(this.playerRunning.x - 60, this.playerRunning.y, "kongVault");
-	this.kongVault.animations.add("kongVault", [7, 8, 9, 10, 11, 12, 13, 13, 13, 14, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], vaultFPS, false);
+	this.kongVault.animations.add("kongVault", [7, 8, 9, 10, 11, 12, 13, 13, 14, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], vaultFPS, false);
 	this.kongVault.events.onAnimationComplete.add(function() {
 			this.playerJumping = false;
 			this.kongVault.alpha = 0;
