@@ -8,6 +8,7 @@ var game = new Phaser.Game(GAME_WIDTH, GAME_HEIGHT, Phaser.CANVAS, "container");
 var Background = new Background(game);
 var MenuScreen = new MenuScreen(game);
 var Player = new Player(game);
+var Objects = new Objects(game);
 
 game.state.add("boot", BootState);
 game.state.add("preload", PreloadState);

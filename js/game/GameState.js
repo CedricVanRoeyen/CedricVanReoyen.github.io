@@ -3,6 +3,7 @@ var GameState = {
 		Background.create("gameBG");
 		Player.create();
 		Player.walkingAwayFromWallAnimation();
+		Objects.create();
 	},
 
 	update: function() {

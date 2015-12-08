@@ -9,7 +9,7 @@ var BootState = {
 		game.scale.pageAlignVertically = true; 
 		game.scale.parentIsWindow = true;
 
-		//game.add.plugin(Phaser.Plugin.Debug);
+		game.add.plugin(Phaser.Plugin.Debug);
 
 		Cocoon.Utils.setAntialias(false);
 		//game.renderer.renderSession.roundPixels = false;

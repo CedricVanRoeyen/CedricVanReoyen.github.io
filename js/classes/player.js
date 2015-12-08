@@ -1,6 +1,8 @@
 var awayFormWallFPS = 20;
-var runningFPS = 25;
+var runningFPS = 20;
 var vaultFPS = 20;
+
+var isInVault = false;
 
 var walkingSpeed = 100;
 
@@ -10,6 +12,8 @@ var playerGravity = 2000;
 var jumpForce = 500;
 var allowJump = false;
 var playerJumping = false;
+
+var playerInitHeight = 88;
 
 function Player(game) {};
 
@@ -21,6 +25,10 @@ Player.prototype.update = function() {
 	if (allowJump) {
 		this.jump();
 	}
+
+	if (isInVault) {
+		this.updateVault();
+	};
 }
 
 Player.prototype.walkingAwayFromWallAnimation = function() {
@@ -61,7 +69,6 @@ Player.prototype.updateForPlayerFrame = function(frameToCheck) {
 	};
 };
 
-
 Player.prototype.runningAnimation = function() {
 	this.playerRunning = game.add.sprite(this.playerAwayFromWallAnimation.x, this.playerAwayFromWallAnimation.y, "running");
 	this.playerRunning.animations.add("running", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], runningFPS, true);
@@ -74,11 +81,15 @@ Player.prototype.runningAnimation = function() {
 
 Player.prototype.kongVault = function() {
 	this.kongVault = game.add.sprite(this.playerRunning.x - 60, this.playerRunning.y, "kongVault");
-	this.kongVault.animations.add("kongVault", [7, 8, 9, 10, 11, 12, 13, 13, 14, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24], vaultFPS, false);
+
+	this.kongVault.animations.add("kongVault", [7, 8, 9, 10, 11, 12, 13, 13, 14, 14, 15, 16, 17, 18, 19, 20, 20, 21, 22], vaultFPS, false);
 	this.kongVault.events.onAnimationComplete.add(function() {
 			this.playerJumping = false;
 			this.kongVault.alpha = 0;
+			this.kongVault.y = this.playerRunning.y;
+			this.playerRunning.frame = 3;
 			this.playerRunning.alpha = 1;
+			this.playerRunning.animations.play("running");
 		}, this);
 	game.physics.arcade.enable(this.kongVault);
 	this.kongVault.alpha = 0;
@@ -88,6 +99,15 @@ Player.prototype.jump = function() {
 	if (game.input.activePointer.isDown){
 		this.kongVault.alpha = 1;
 		this.playerRunning.alpha = 0;
+		this.playerRunning.animations.stop();
 		this.kongVault.animations.play("kongVault");
+
+		isInVault = true;
 	}
+}
+
+Player.prototype.updateVault = function() {
+	if (isInVault && this.kongVault.frame == 9) {
+		this.kongVault.y = 88 - 20;
+	};
 }

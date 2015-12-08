@@ -1,1 +1,2 @@
-var GAME_SPEED = 500;
+var GAME_SPEED = 250;
+var playerRunning = false;

@@ -1,5 +1,3 @@
-var playerRunning = false;
-
 //lantern
 var lanternsPlaced;
 var lanternGroup;
